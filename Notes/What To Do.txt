@@ -1,0 +1,88 @@
+Design and Implement Swimming Pool Automated Checking System (SPAC)
+  - It assists in keeping private pools maintained
+  - Design with use over internet in mind
+    - Can run locally for testing
+  - Implement in Java, C, C++ or Python
+  - Web Admin Interface
+
+What is SPACS
+  - Manage Collection and Analysis of measurements from pools
+  - Pools are registered by local pool shops
+  - Data from pool automatically entered by Pool Testing Units (PTUs)
+    - Via Web
+  - 
+
+Data From The PTU
+  - Date/Time
+  - pH (acidity)
+  - ORP (chlorine level)
+  - TA (total alkalinity)
+  - Temperature
+  - Water Hardness level
+  - date/time of last filter operation
+  - Water Flow Rate through filter
+  - Chlorinator Status
+  - Water Level Status
+  - Alarms
+    - Water Level Too Low
+    - pumps fail to operate
+  - Measurements should fall within a recommended and a safe range
+    - Alert if outside recommended range
+      - Action within a month
+    - Warning if outside safe
+      - No use until resolved
+
+Actors
+  - Global Admin
+  - Local Pool Shops
+  - Pool Testing Units (PTUs)
+
+What To Submit - Documents (70%)
+  - Use case diagrams
+    - Introduce NO NEW functionality
+    - Use clients language
+    - Introduce no new terms
+    - Boundary between this system and external should be clearly defined
+      - And Justified
+    - Table explaining use cases
+
+  - Object Modelling
+    - Class Diagrams
+    - Roles and Multiplicities
+    - Attributes, Types and Major Operations
+    - Use clients Language
+    - Explain names
+    - Class diagrams separate
+      - Show how they interact in another diragram
+
+  - Dynamic Modelling
+    - 5 sequence diagrams for any 5 use cases
+
+  - Design Constraints
+    - List constraints and prioritize them
+
+  - Subsystem Decomposition
+    - Decompose SPACS into subsystems
+    - Justify reasons
+
+  - More Dynamic Modelling
+    - 2 statechart diagrams
+    - Clients terminology
+  
+  - Design Patterns
+    - Two that are appropriate
+    - Reasons why
+
+What To Submit - Code (30%)
+  - Adding, editing, removing pool shops in SPACS by admin
+  - Adding, editing and removing pools by shops
+  - GUI is unmarked
+    - Ability to navigate GUI is
+  - readme.txt with compile/run info
+    - Also how to populate with test data
+
+What to Submit - Presentation (up to -20%)
+  - 20-30 minutes
+  - Explain design
+  - demo code
+
