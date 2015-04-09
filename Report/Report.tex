@@ -1,0 +1,56 @@
+\documentclass[a4paper,12pt,openany]{report}
+
+\usepackage{titling}
+\usepackage[margin=0.75in,headsep=0.5in,footskip=0.5in]{geometry}
+\usepackage{graphicx}
+\usepackage{float}
+
+%\usepackage{parskip}
+
+%\setlength{\parindent}{0pt} % Remove Paragraph indenting
+
+\renewcommand\thesection{\arabic{section}} % Remove Chapter Numbers
+
+\newcommand{\subtitle}[1]{
+	\posttitle{
+		\par\end{center}
+		\begin{center}\large#1\end{center}
+		\vskip0.5em
+	}
+}
+
+\newcommand{\coverphoto}[2]{
+	\postdate{
+		\par\end{center}
+		\begin{center}
+			\includegraphics[width=15cm]{#1}
+		\end{center}
+	}
+}
+
+% document
+
+\begin{document}
+
+% Title Page
+
+\title{Swimming Pool Automated Checking System}
+\subtitle{CITS4401 Software Requirements and Design - Practical Assignment}
+\author{Mitchell Pomery (21130887)}
+\coverphoto{images/the_general_problem}{XKCD 974}
+\maketitle
+
+\clearpage
+
+\tableofcontents
+
+\clearpage
+
+\input{chapters/introduction}
+
+\begin{thebibliography}{20} 
+	\bibitem{ref_for_linking} Info
+\end{thebibliography} 
+
+
+\end{document}
