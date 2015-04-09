@@ -1,0 +1,5 @@
+# Latex Junk
+*.aux
+*.log
+*.toc
+*.synctex.gz
