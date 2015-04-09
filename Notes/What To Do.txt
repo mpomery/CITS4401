@@ -38,6 +38,8 @@ Actors
   - Pool Testing Units (PTUs)
 
 What To Submit - Documents (70%)
+  - Single PDF File
+
   - Use case diagrams
     - Introduce NO NEW functionality
     - Use clients language
@@ -74,6 +76,8 @@ What To Submit - Documents (70%)
     - Reasons why
 
 What To Submit - Code (30%)
+  - Single Zip File
+
   - Adding, editing, removing pool shops in SPACS by admin
   - Adding, editing and removing pools by shops
   - GUI is unmarked
