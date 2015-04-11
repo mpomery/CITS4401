@@ -1,0 +1,18 @@
+Pool Testing Unit (PTU) sends regular update to System
+Pool Testing Unit (PTU) sends urgent update to System
+Pool hasn't Checked in in 5 days
+Generate Status Report
+View Status Report
+
+
+Admin adds new Pool Shop
+Pool Shop adds new pool 
+
+
+Actors
+  - Global Admin
+  - Pool Shop Admin
+  - Pool Shop Customer
+  - Pool Testing Unit
+
+
