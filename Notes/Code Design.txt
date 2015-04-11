@@ -1,0 +1,15 @@
+Network communication using json
+
+Server
+  Setup
+    Start Logging Service
+    Start Database Connection
+  Deal With Requests
+
+Auth Module
+  Check Login
+  
+
+
+
+
