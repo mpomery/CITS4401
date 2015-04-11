@@ -6,10 +6,23 @@ Server
     Start Database Connection
   Deal With Requests
 
+Transaction Bean
+  Loads Objects out of DB, or creates an empty object
+  At end of transaction objects are written back to the database
+  Modify the objects and the database ends up modified
+  Handles all database queries
+
 Auth Module
   Check Login
+    Returns User if authenticated
+
+User
+  getters/setters
+
+PTU Data
+  Contains all the PTU info
+  getters only
+  setters are in the creation
+
+PTU Report
   
-
-
-
-
