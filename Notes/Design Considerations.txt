@@ -1,0 +1,23 @@
+Performance
+  - scalable
+  - Can run on several servers behind a load balancer
+  - Possible extension to load balance databases too
+
+Reliability
+  - Self reporting to global admin
+  - Can run on several servers to minimize chance of downtime
+  - Error logging
+  - Email Alerts
+
+Usability
+  - Designed with UX in mind
+
+Portability
+  - Runs in python (cross platform language)
+  - Setup scripts written to configure everything (puppet??)
+
+Modifiability
+  - Abstraction
+
+Future Requirements
+  - Abstraction!
