@@ -12,26 +12,6 @@ What is SPACS
     - Via Web
   - 
 
-Data From The PTU
-  - Date/Time
-  - pH (acidity)
-  - ORP (chlorine level)
-  - TA (total alkalinity)
-  - Temperature
-  - Water Hardness level
-  - date/time of last filter operation
-  - Water Flow Rate through filter
-  - Chlorinator Status
-  - Water Level Status
-  - Alarms
-    - Water Level Too Low
-    - pumps fail to operate
-  - Measurements should fall within a recommended and a safe range
-    - Alert if outside recommended range
-      - Action within a month
-    - Warning if outside safe
-      - No use until resolved
-
 Actors
   - Global Admin
   - Local Pool Shops
