@@ -1,0 +1,39 @@
+TABLE: Users
+  user id
+  Title
+  Real Name
+  Address
+  email address
+  phone number
+  mobile number
+
+TABLE: User Access
+  user id
+  username
+  password
+  access level
+
+TABLE: Shops
+  shop id
+  owners user id
+
+TABLE: Pools
+  pool id
+  user id
+  shop id
+
+TABLE: Pool Info
+  pool id
+  length
+  width
+  depth
+  aboveground
+  pool material
+
+TABLE: Pool Types
+  type id
+  type name
+
+TABLE: Pool Material
+  material id
+  material name
