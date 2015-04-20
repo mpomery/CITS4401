@@ -14,5 +14,109 @@ Actors
   - Pool Shop Admin
   - Pool Shop Customer
   - Pool Testing Unit
+  - Report Generator
 
 
+
+NAME: 
+ACTORS: 
+GOAL:
+PRECONDITIONS:
+BASIC FLOW:
+ALTERNATIVE FLOW:
+POSTCONDITIONS:
+SPEC REQS:
+
+
+NAME: regularUpdate
+ACTORS: PoolTestingUnit
+GOAL: store collected information from the PTU in the system
+PRECONDITIONS: PoolTestingUnit is authenticated
+BASIC FLOW:
+  - Use case starts when ptu sends data
+  - validate data
+  - store it so that it can be used later
+  - The use case ends
+ALTERNATIVE FLOW:
+  - Data is malformed
+    - Recieved data is logged for analysis
+  - Issue storing data
+    - Fall back to logging data and alert the administrator
+POSTCONDITIONS:
+  Success: Data has been stored
+  Failure: Data has been stored in a log for analysis by admin
+SPEC REQS:
+
+NAME: urgentUpdate
+ACTORS: PoolTestingUnit, PoolShopAdministrator, PoolOwner
+GOAL: store collected information from the PTU in the system and alert the pool owner and pool shop that there is a problem
+PRECONDITIONS: PoolTestingUnit is authenticated
+BASIC FLOW:
+  - use case starts when ptu sends data with alerts
+  - validate data
+  - store it so that it can be used later
+  - email is sent to the PoolShopOwner and PoolOwner
+  - the use case ends
+ALTERNATIVE FLOW:
+  - Data is malformed
+    - Recieved data is logged for analysis
+  - Issue storing data
+    - Fall back to logging data and alert the administrator
+  - Email fails
+    - Email gets retried and event is logged
+POSTCONDITIONS:
+  Success: Data has been stored, email has been sent to PoolShopOwner and PoolOwner
+  Failure: Data has been stored in a log for analysis by admin
+SPEC REQS:
+
+NAME: generateReport
+ACTORS: PoolOwner, PoolShopAdministrator
+GOAL: provide latest data to 
+PRECONDITIONS: First week of the PTU or a month since the last report
+BASIC FLOW:
+  - use case starts at the same time every day
+  - gets a list of pools that need reports
+  - for each pool
+    - gets the information that should be on the report
+    - generates the report as a pdf
+    - emails it off
+ALTERNATIVE FLOW:
+POSTCONDITIONS:
+  Success: Report generated and emailed to pool owner and pool shop
+  Failure: Any errors logged for admin to look over
+SPEC REQS:
+
+NAME: modifyPoolShop
+ACTORS: Administrator
+GOAL: To add/edit/remove a pool shop to/in/from the system.
+PRECONDITIONS:
+BASIC FLOW:
+ALTERNATIVE FLOW:
+POSTCONDITIONS:
+SPEC REQS:
+
+NAME: modifyPool
+ACTORS: PoolShopAdministrator
+GOAL: To add/edit/remove a pool to/in/from the system.
+PRECONDITIONS:
+BASIC FLOW:
+ALTERNATIVE FLOW:
+POSTCONDITIONS:
+SPEC REQS:
+
+
+
+drop:
+email
+viewReport
+
+merge:
+addPoolShop
+editPoolShop
+removePoolShop
+    modifyPoolShop
+
+addPool
+editPool
+removePool
+    modifyPool
