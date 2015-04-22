@@ -1,9 +1,130 @@
-\section{Use Case Diagrams}
+\newcommand{\usecase}[7]{
+	NAME: #1 \newline
+	ACTORS: #2 \newline
+	GOAL: #3 \newline
+	PRECONDITIONS: #4 \newline
+	BASIC FLOW: #5 \newline
+	ALTERNATIVE FLOW: #6 \newline
+	POSTCONDITIONS: #7 \newline
+}
 
-\par
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
+\section{Use Case Diagram}
+
+\begin{center}
+	\includegraphics[width=15cm]{images/UseCaseDiagram}
+\end{center}
+
+\usecase
+{regularUpdate}
+{PoolTestingUnit}
+{store collected information from the PTU in the system}
+{PoolTestingUnit is authenticated}
+{  - Use case starts when ptu sends data
+  - validate data
+  - store it so that it can be used later
+  - The use case ends}
+{  - Data is malformed
+    - Recieved data is logged for analysis
+  - Issue storing data
+    - Fall back to logging data and alert the administrator}
+{  Success: Data has been stored
+  Failure: Data has been stored in a log for analysis by admin}
+
+\usecase
+{urgentUpdate}
+{PoolTestingUnit, PoolShopAdministrator, PoolOwner}
+{store collected information from the PTU in the system and alert the pool owner and pool shop that there is a problem}
+{PoolTestingUnit is authenticated}
+{  - use case starts when ptu sends data with alerts
+  - validate data
+  - store it so that it can be used later
+  - email is sent to the PoolShopOwner and PoolOwner
+  - the use case ends}
+{  - Data is malformed
+    - Recieved data is logged for analysis
+  - Issue storing data
+    - Fall back to logging data and alert the administrator
+  - Email fails
+    - Email gets retried and event is logged}
+{  Success: Data has been stored, email has been sent to PoolShopOwner and PoolOwner
+  Failure: Data has been stored in a log for analysis by admin}
+
+\usecase
+{generateReport}
+{PoolOwner, PoolShopAdministrator}
+{provide latest data to }
+{First week of the PTU or a month since the last report}
+{  - use case starts at the same time every day
+  - gets a list of pools that need reports
+  - for each pool
+    - gets the information that should be on the report
+    - generates the report as a pdf
+    - emails it off}
+{}
+{  Success: Report generated and emailed to pool owner and pool shop
+  Failure: Any errors logged for admin to look over}
+
+\usecase
+{addPoolShop}
+{Administrator}
+{To add a pool shop to the system.}
+{}
+{  - Administrative user enters information about the pool shop}
+{  - Invalid Information
+    - Error displayed and user is able to re-enter}
+{Success: Data is stored and can be retieved later
+Failure: User is given achance to modify data}
+
+\usecase
+{editPoolShop}
+{Administrator}
+{To edit a pool shop in the system.}
+{}
+{  - Administrative user enters updated information about the pool shop}
+{  - Invalid Information
+    - Error displayed and user is able to re-enter}
+{Success: Data is stored and can be retieved later
+Failure: User is given achance to modify data}
+
+\usecase
+{removePoolShop}
+{Administrator}
+{To remove a pool shop from the system.}
+{}
+{  - Administrative selects the pool shop
+  - Confirms that the pool shop should be disabled}
+{  - Cancelled
+    - No change is made}
+{Data is no longer accessible. User no longer able to log in}
+{No change}
+
+\usecase
+{addPool}
+{PoolShopAdministrator}
+{To add a pool to the system.}
+{}
+{}
+{}
+{}
+
+\usecase
+{editPool}
+{PoolShopAdministrator}
+{To edit a pool in the system.}
+{}
+{}
+{}
+{}
+
+\usecase
+{removePool}
+{PoolShopAdministrator}
+{To remove a pool from the system.}
+{}
+{}
+{}
+{}
+
+
+
+
