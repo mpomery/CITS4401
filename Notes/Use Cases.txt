@@ -86,14 +86,49 @@ POSTCONDITIONS:
   Failure: Any errors logged for admin to look over
 SPEC REQS:
 
-NAME: modifyPoolShop
+NAME: addPoolShop
 ACTORS: Administrator
-GOAL: To add/edit/remove a pool shop to/in/from the system.
+GOAL: To add a pool shop to the system.
 PRECONDITIONS:
 BASIC FLOW:
+  - Administrative user enters information about the pool shop
 ALTERNATIVE FLOW:
+  - Invalid Information
+    - Error displayed and user is able to re-enter
 POSTCONDITIONS:
+Success: Data is stored and can be retieved later
+Failure: User is given achance to modify data
 SPEC REQS:
+
+NAME: editPoolShop
+ACTORS: Administrator
+GOAL: To edit a pool shop in the system.
+PRECONDITIONS:
+BASIC FLOW:
+  - Administrative user enters updated information about the pool shop
+ALTERNATIVE FLOW:
+  - Invalid Information
+    - Error displayed and user is able to re-enter
+POSTCONDITIONS:
+Success: Data is stored and can be retieved later
+Failure: User is given achance to modify data
+SPEC REQS:
+
+NAME: removePoolShop
+ACTORS: Administrator
+GOAL: To remove a pool shop from the system.
+PRECONDITIONS:
+BASIC FLOW:
+  - Administrative selects the pool shop
+  - Confirms that the pool shop should be disabled
+ALTERNATIVE FLOW:
+  - Cancelled
+    - No change is made
+POSTCONDITIONS:
+Success: Data is no longer accessible. User no longer able to log in
+Failure: No change
+SPEC REQS:
+
 
 NAME: modifyPool
 ACTORS: PoolShopAdministrator
