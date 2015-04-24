@@ -1,11 +1,16 @@
 \newcommand{\usecase}[7]{
-	NAME: #1 \newline
-	ACTORS: #2 \newline
-	GOAL: #3 \newline
-	PRECONDITIONS: #4 \newline
-	BASIC FLOW: #5 \newline
-	ALTERNATIVE FLOW: #6 \newline
-	POSTCONDITIONS: #7 \newline
+\begin{center}
+\begin{tabular}[h!]{| l | p{13cm} |}
+	\hline
+	\textbf{Name} & #1 \\ \hline
+	\textbf{Actors} & #2 \\ \hline
+	\textbf{Goal} & #3 \\ \hline
+	\textbf{Preconditions} & #4 \\ \hline
+	\textbf{Basic Flow} & #5 \\ \hline
+	\textbf{Alternative Flow} & #6 \\ \hline
+	\textbf{Postconditions} & #7 \\ \hline
+\end{tabular}
+\end{center}
 }
 
 \section{Use Case Diagram}
@@ -19,16 +24,30 @@
 {PoolTestingUnit}
 {store collected information from the PTU in the system}
 {PoolTestingUnit is authenticated}
-{  - Use case starts when ptu sends data
-  - validate data
-  - store it so that it can be used later
-  - The use case ends}
-{  - Data is malformed
-    - Recieved data is logged for analysis
-  - Issue storing data
-    - Fall back to logging data and alert the administrator}
-{  Success: Data has been stored
-  Failure: Data has been stored in a log for analysis by admin}
+{
+\begin{enumerate}
+\item Use case starts when ptu sends data
+\item validate data
+\item store it so that it can be used later
+\item The use case ends
+\end{enumerate}
+}
+{
+\begin{enumerate}
+\item Data is malformed
+\begin{enumerate}
+\item Recieved data is logged for analysis
+\end{enumerate}
+\item Issue storing data
+\begin{enumerate}
+\item Fall back to logging data and alert the administrator
+\end{enumerate}
+\end{enumerate}
+}
+{\begin{enumerate}
+\item Success: Data has been stored
+\item Failure: Data has been stored in a log for analysis by admin
+\end{enumerate}}
 
 \usecase
 {urgentUpdate}
