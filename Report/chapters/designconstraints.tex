@@ -1,9 +1,40 @@
-\section{Design Constraints}
+\section{Design Considerations}
 
 \par
-The following are a list of constraints that have been considered to make sure that the system is kept simple. This ensures 
+The following are a list of considerations that have been made. These choices affect what the system will look like.
 
 \begin{enumerate}
-	\item Relationships between objects are simple - Can't have one owner at two pool shops
-	\item A
+	\item Python
+	\item Statelessness
+	\item Simple Relationships
+	\item Transaction Beans
 \end{enumerate}
+
+\subsection{Python}
+\par
+Python has been chosen as the implementation language over other object oriented languages such as Java. This system is small and python allows for rapid development. Well written Python code also has the advantage of being self documenting, meaning less time has to be spent writing comments and keeping them up to date.
+
+\par
+Unlike other object oriented languages, Python is dynamically typed. This means that the types of each variable are not defined while developing, but rather at run time. Python is also an interpreted language, rather than a compiled one. This means that things such as type errors and non existent variables will only be found during run time. A full set of testing and good logging will minimize the risk of this causing issues while the system is in production.
+
+\par
+As python has been chosen, class and method names in this document are named according to the Python PEP 8 Style Guide.
+
+% Python on this project as a testing ground
+
+\subsection{Statelessness}
+\par
+The application has been developed with scalability in mind meaning that all sessions should be stateless and information should be able to be passed from any server to any other server. Multiple instances of the server should also be able to communicate with the database. This will allow the application to scale in the event where the number of users increases past an individual servers load.
+
+\par
+Adding this scalability will require a load balancer to sit between the users and the server instances. The addition of the load balancer will also allow individual servers to be taken offline for updates or if there is an issue with a machine.
+
+\subsection{Simple Relationships}
+\par
+The relationships between all the objects are kept as simple as possible to minimize the need for complex helper classes.
+
+\subsection{Transaction Beans}
+\par
+Transaction Beans are found in many enterprise Java applications and make modifying data in the database simple. They allow the object to be loaded by a transaction bean and will store any changes made to the object once it is no longer needed. This means that all object loading will be done in the one location, and the structure of in the code will mirror that of the database.
+
+
