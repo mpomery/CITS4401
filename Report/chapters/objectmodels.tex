@@ -1,6 +1,5 @@
 \section{Object Models}
 
-
 \begin{figure}[h!]
 \begin{center}
 	\includegraphics[width=15cm]{images/ObjectRelations}
@@ -10,3 +9,13 @@
 
 \par
 There can be multiple administrators in the SPACS system that manage all the PoolShops. Each PoolOwner can only be registered at one PoolShop, and each PoolTestingUnit can only be linked to one PoolOwner. The Administrator, PoolShop and PoolOwner objects all contain information about a single person.
+
+\subsection{Objects}
+\subsubsection{User}
+User is the class that all users of the system will fall under. It ensures a minimum amount of information is collected about each user and will implement all the basic instructions needed for interacting with the objects.
+
+\subsubsection{Administrator, PoolShop and PoolOwner}
+These are all extensions of the User object and will implement any extra methods that they do not inherit.
+
+\subsubsection{PoolTestingUnit}
+Pool Testing Units are mostly passive users of the system and have the sole role of providing information to the system. They are closely linked to their PoolOwner.
