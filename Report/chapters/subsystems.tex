@@ -1,1 +1,31 @@
 \section{Subsystems}
+
+\par
+The SPACS system will be broken down into several subsystems.
+
+\par
+\begin{enumerate}
+	\item Server
+	\begin{enumerate}
+		\item Website
+		\item API
+		\item Scheduler
+	\end{enumerate}
+	\item Database
+\end{enumerate}
+
+\par
+The server subsystem is responsible for running the main portion of the program. It will start up all the subsystems below it according to a global configuration file. Any errors that the systems below it cause will be caught by the server and handled gracefully. It will also be responsible for making sure that any information from the systems below it are logged correctly.
+
+\par
+The website will be the main user interface and will be managed by the server. All connections to this will be stateless, meaning that several servers can be launched behind a load balancer and act together so that the system can be scaled up as the number of users increases if needed.
+
+\par
+The API will run on top of the Website and will be the only way that a user can interface with the database. This ensures that all the features the end user sees exist in one place.
+
+\par
+The scheduler will be responsible for running anything that is timing sensitive, such as report generation, or that may need to be retried, such as emailing. This ensures that all retry and timing logic will appear in only one location. Any thing that needs to be scheduled will be stored such that it can be accessed after the server has been restarted. Items that are scheduled will be responsible for setting their own timings and retry logic allowing the flexibility for them to react differently depending on their own outcomes.
+
+\par
+The database will be the one true source of all information for the system. It will not be managed by the server subsystem.
+
