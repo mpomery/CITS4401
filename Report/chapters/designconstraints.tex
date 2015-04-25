@@ -1,13 +1,14 @@
 \section{Design Considerations}
 
 \par
-The following are a list of considerations that have been made. These choices affect what the system will look like.
+The following are a list of considerations that have been made. These choices affected what the system looks like.
 
 \begin{enumerate}
 	\item Python
 	\item Statelessness
 	\item Simple Relationships
 	\item Transaction Beans
+	\item Reliability
 \end{enumerate}
 
 \subsection{Python}
@@ -37,4 +38,42 @@ The relationships between all the objects are kept as simple as possible to mini
 \par
 Transaction Beans are found in many enterprise Java applications and make modifying data in the database simple. They allow the object to be loaded by a transaction bean and will store any changes made to the object once it is no longer needed. This means that all object loading will be done in the one location, and the structure of in the code will mirror that of the database.
 
+\par
 Transaction beans centralize all database access. This means that any issues are dealt with in this one location, as well as the logging of any requests.
+
+\subsection{Reliability}
+\par
+The SPACS system has been designed with reliability in mind. The ability to run multiple SPACS servers in a cluster minimizes the chance of downtime. It is also self contained and will restart itself after any fatal errors. Logging and email alerts also mean that an Administrator monitoring the system can easily find and diagnose problems.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
