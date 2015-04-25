@@ -24,7 +24,7 @@ The website will be the main user interface and will be managed by the server. A
 
 \subsubsection{API}
 \par
-The API will run on top of the Website and will be the only way that a user can interface with the database. This ensures that all the features the end user sees exist in one place.
+The API will run on top of the Website and will be the only way that a user can interface with the database. This ensures that all the features the end user sees exist in one place. All Object manipulation will be managed calls implemented in the API.
 
 \subsubsection{Scheduler}
 \par
@@ -32,5 +32,5 @@ The scheduler will be responsible for running anything that is timing sensitive,
 
 \subsection{Database}
 \par
-The database will be the one true source of all information for the system. It will not be managed by the server subsystem.
+The database will be the one true source of all information for the system. Objects will be loaded out of it and stored back in it when they are finished with. Starting and keeping it running will not be a role of server subsystem.
 
