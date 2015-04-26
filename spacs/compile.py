@@ -19,5 +19,5 @@ shutil.copytree(SOURCE_PY, TARGET_DIR)
 shutil.copytree(SOURCE_WWW, TARGET_WWW)
 
 os.chdir(TARGET_DIR)
-call(["python", "main.py"])
+os.system("python main.py")
 os.chdir("../")
