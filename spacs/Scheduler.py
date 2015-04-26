@@ -1,6 +1,6 @@
 def start():
     while True:
-        print("Scheduler")
+        pass
 
 def health():
     pass
