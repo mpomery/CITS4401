@@ -1,5 +1,5 @@
 import LogHandler
-import Scheduler
+import QueueManager
 import WebServer
 import thread
 
@@ -19,8 +19,8 @@ def configure_logging():
 Start all Subsystems
 """
 def start_threads():
-    LogHandler.log_info("Starting Scheduler Thread")
-    thread.start_new_thread(Scheduler.start, ())
+    LogHandler.log_info("Starting Queue Manager Thread")
+    thread.start_new_thread(QueueManager.start, ())
     LogHandler.log_info("Starting WebServer Thread")
     thread.start_new_thread(WebServer.start, ())
 
