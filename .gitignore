@@ -6,3 +6,4 @@
 *.bbl
 *.blg
 *.pyc
+spacs/target/*
