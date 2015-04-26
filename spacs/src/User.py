@@ -1,6 +1,6 @@
 import Validator
 
-def User(Object):
+class User(Object):
     
     
     def __init__(self, id=None, title=None, name=None, address=None, email_address=None,
@@ -15,56 +15,71 @@ def User(Object):
     
     @property
     def id(self):
-        return self.id
+        return self.__id
     
     @property
     def title(self):
-        return self.title
+        return self.__title
     
     @property
     def name(self):
-        return self.name
+        return self.__name
     
     @property
     def address(self):
-        return self.address
+        return self.__address
     
     @property
     def email_address(self):
-        return self.email_address
+        return self.__email_address
     
     @property
     def phone_number(self):
-        return self.phone_number
+        return self.__phone_number
     
     @property
     def mobile_number(self):
-        return self.mobile_number
+        return self.__mobile_number
     
     @id.setter
-    def id(self):
-        self.id
+    def id(self, id):
+        self.__id = id
     
-    @property
-    def title(self):
-        self.title
+    @title.setter
+    def title(self, title):
+        self.__title = title
     
-    @property
-    def name(self):
-        self.name
+    @name.setter
+    def name(self, name):
+        self.__name = name
     
-    @property
-    def address(self):
-        self.address
+    @address.setter
+    def address(self, address):
+        self.__address = address
     
-    @property
-    def email_address(self):
-        self.email_address
+    @email_address.setter
+    def email_address(self, email_address):
+        if not Validator.is_email(email_address):
+            raise ValueError("Email Address is Invalid")
+        self.__email_address = email_address
     
-    @property
-    def phone_number(self):
-        self.phone_number
+    @phone_number.setter
+    def phone_number(self, phone_number):
+        if not Validator.is_phone_number(phone_number):
+            raise ValueError("Phone Number is not valid")
+        self.__phone_number = phone_number
     
-    @property
-    def mobile_number(self):
-        self.mobile_number
+    @mobile_number.setter
+    def mobile_number(self, mobile_number):
+        if not Validator.is_phone_number(mobile_number):
+            raise ValueError("Phone Number is not valid")
+        self.__mobile_number = mobile_number
+
+class Administrator(User):
+    pass
+
+class PoolShop(User):
+    pass
+
+class PoolOwner(User):
+    pass
