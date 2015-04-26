@@ -1,6 +1,6 @@
 import Validator
 
-class User(Object):
+class User(object):
     
     
     def __init__(self, id=None, title=None, name=None, address=None, email_address=None,
