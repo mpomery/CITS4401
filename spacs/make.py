@@ -35,6 +35,30 @@ def populate_target_dir():
     build_database()
 
 def build_database():
+    create_user_table = """CREATE TABLE `User` (
+            `id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            `title`	TEXT,
+            `name`	TEXT,
+            `address`	TEXT,
+            `email_address`	TEXT,
+            `phone_number`	TEXT,
+            `mobile_number`	TEXT
+            );"""
+    
+    con = None
+    try:
+        # read the object from the database
+        con = sqlite3.connect('target/database.db')
+        cur = con.cursor()
+        cur.execute(create_user_table)
+    except sqlite3.Error, e:
+        print("Database Issue: %s" % e.args[0])
+    finally:
+        if con:
+            con.close()
+    
+
+
     pass
 
 def populate_database():

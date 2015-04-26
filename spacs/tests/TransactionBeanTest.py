@@ -12,7 +12,7 @@ class TransactionBeanTest(unittest.TestCase):
         phone_number = "9876543210"
         
         # Create a new bean
-        tb = TransactionBean.AdministratorBean()
+        tb = TransactionBean.UserBean()
         user = tb.get_object()
         # Update Info
         user.title = title
@@ -25,7 +25,7 @@ class TransactionBeanTest(unittest.TestCase):
         id = tb.commit()
         
         # Load the user again
-        tb = TransactionBean.AdministratorBean(id)
+        tb = TransactionBean.UserBean(id)
         user = tb.get_object()
         
         #Check the values are right
