@@ -25,3 +25,10 @@ SPACS = Swimming Pool Automated Checking System
 - Run `python test.py`
 - This will run all tests in `tests`
 - Examine the output
+
+## TODO
+
+- Write API
+- Write Transaction Bean Handler
+- Write Queue Handler
+
