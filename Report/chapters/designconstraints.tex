@@ -6,7 +6,7 @@ The following are a list of considerations that have been made. These choices af
 \begin{enumerate}
 	\item Python
 	\item Statelessness
-	\item Simple Relationships
+	\item API Based
 	\item Transaction Beans
 	\item Reliability
 \end{enumerate}
@@ -30,50 +30,15 @@ The application has been developed with scalability in mind meaning that all ses
 \par
 Adding this scalability will require a load balancer to sit between the users and the server instances. The addition of the load balancer will also allow individual servers to be taken offline for updates or if there is an issue with a machine.
 
-\subsection{Simple Relationships}
+\subsection{API Based}
 \par
-The relationships between all the objects are kept as simple as possible to minimize the need for complex helper classes.
+Keeping the relationships between all the objects are kept as simple as possible minimizes the need for complex helper classes. As such, everything can be implemented as API calls made straight from the web application. This leads itself to making the application scalable, as as much of the work as possible is rendered at the client side.
 
 \subsection{Transaction Beans}
 \par
-Transaction Beans are found in many enterprise Java applications and make modifying data in the database simple. They allow the object to be loaded by a transaction bean and will store any changes made to the object once it is no longer needed. This means that all object loading will be done in the one location, and the structure of in the code will mirror that of the database.
-
-\par
-Transaction beans centralize all database access. This means that any issues are dealt with in this one location, as well as the logging of any requests.
+Transaction Beans are found in many enterprise Java applications and make modifying data in the database simple. They allow the object to be loaded from a database bean and will store any changes made to the object when completed. All object loading and saving will be done in the transaction beans, and the structure of in the code will mirror that of the database. As transaction beans centralize all database access any issues with the database and all logging of database requests will be dealt with here.
 
 \subsection{Reliability}
 \par
 The SPACS system has been designed with reliability in mind. The ability to run multiple SPACS servers in a cluster minimizes the chance of downtime. It is also self contained and will restart itself after any fatal errors. Logging and email alerts also mean that an Administrator monitoring the system can easily find and diagnose problems.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
