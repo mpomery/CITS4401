@@ -25,13 +25,14 @@ def start_threads():
     thread.start_new_thread(WebServer.start, ())
 
 """
-Stop all subsystems cleanly
+Stop all subsystems cleanly and exits the program
 """
 def clean_up_threads():
     pass
 
 """
 Check the Health of all Subsystems
+returns a list of tuples of systems and their status
 """
 def health_check():
     pass
@@ -43,7 +44,8 @@ def main():
     start_threads()
     while True:
         try:
-            
+            health = health_check()
+            #TODO Restart failed systems
             pass
         except KeyboardInterrupt:
             LogHandler.log_info("Killed by signal")
