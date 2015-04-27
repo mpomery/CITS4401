@@ -32,7 +32,6 @@ def populate_target_dir():
     # Copy Files Across
     shutil.copytree(SOURCE_PY, TARGET_DIR)
     shutil.copytree(SOURCE_WWW, TARGET_WWW)
-    build_database()
 
 def build_database():
     create_user_table = """CREATE TABLE `User` (
@@ -75,10 +74,11 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 if string.lower(sys.argv[1]) == "test":
+    clean_target_dir()
+    populate_target_dir()
+    build_database()
     for file in os.listdir(TEST_DIR):
         print(file)
-        clean_target_dir()
-        populate_target_dir()
         populate_database()
         shutil.copyfile(TEST_DIR + "/" + file, TARGET_DIR + "/" + file)
         os.chdir(TARGET_DIR)
@@ -86,6 +86,7 @@ if string.lower(sys.argv[1]) == "test":
         os.chdir("../")
 elif string.lower(sys.argv[1]) == "compile":
     populate_target_dir()
+    build_database()
 elif string.lower(sys.argv[1]) == "database":
     build_database()
 elif string.lower(sys.argv[1]) == "populate":
