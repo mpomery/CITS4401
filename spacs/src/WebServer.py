@@ -3,6 +3,7 @@ import LogHandler
 import string
 import os
 import API
+import json
 
 def start():
     PORT = 8000
@@ -66,6 +67,7 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         # Map API Calls to functions
         api_mapping={
                 "default": API.bad_call,
+                "invalid_data": API.invalid_data,
                 "auth/login": API.not_implimented,
                 "auth/logout": API.not_implimented,
                 "ptu/update": API.not_implimented,
@@ -94,7 +96,13 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             data_length = int(data_length)
             data = self.rfile.read(data_length)
-        print(data)
+        
+        # Check data is valid JSON
+        try:
+            json.loads(data)
+        except ValueError, e:
+            data = "{}"
+            call = "invalid_data"
         
         # Get the mapping
         try:
@@ -105,9 +113,15 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
             command = api_mapping["default"]
             self.send_response(400)
         
-        command(data, parameters)
+        # Finish Headers
+        self.send_header("Content-type", "application/json")
+        self.end_headers()
         
-        
+        # Execute the mapping and respond
+        response = command(data, parameters)
+        if response == None:
+            response = "{}"
+        self.wfile.write(response)
     
     """
     Handles all calls to the main web server
