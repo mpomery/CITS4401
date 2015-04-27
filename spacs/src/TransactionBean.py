@@ -4,6 +4,12 @@ import User
 import PoolTestingUnit
 import inspect
 
+"""
+Avoid using this
+"""
+def get_properties():
+    return [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
+
 
 #TODO: Comment this class
 """
@@ -16,33 +22,41 @@ class TransactionBean(object):
     
     """
     Loads an object out of the database and into an an object
+    Provide an empty dictionary to search for everything
     """
-    def __init__(self, id=None):
-        if self.__class__.selectquery == None or id==None:
-            # Creating a new object, so return an empty one
-            if id == None:
-                self.object = self.__class__.obj()
-                return
-            
-            # Get the objects properties
-            properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
-            self.__class__.colums = []
-            columnsstring = ""
-            # Create the SQL
-            for p in properties:
-                columnsstring += str(p) + ", "
-                self.__class__.colums.append(str(p))
-            columnsstring = columnsstring[0:-2]
-            
-            if self.__class__.table == None:
-                self.__class__.table = self.__class__.obj.__name__
-            # Read record from table
-            self.__class__.selectquery = "SELECT " + columnsstring + " FROM " + self.__class__.table + " WHERE id=" + str(id) + ";"
+    def __init__(self, searchterms = None):
+        # Creating a new object, so return an empty one
+        print("RUNNING")
+        if searchterms == None:
+            self.object = self.__class__.obj()
+            return
+        
+        if self.__class__.table == None:
+            self.__class__.table = self.__class__.obj.__name__
+        
+        selecting = ""
+        for porperty in self.__class__.properties:
+            selecting += porperty + ", "
+        selecting = selecting[0:-2]
+        
+        search = ""
+        for key, val in searchterms.iteritems():
+            search += "AND " + str(key) + "=" + str(val) + " "
+        search = search[4:]
+        
+        limiter = ""
+        for key, val in self.__class__.fixed.iteritems():
+            limiter += "AND " + str(key) + "=" + str(val) + " "
+        
+        # Read record from table
+        self.__class__.selectquery = "SELECT " + selecting + " FROM " + self.__class__.table + \
+        " WHERE " + search + " " +  limiter + ";"
         
         print("QUERY: " + str(self.__class__.selectquery))
         
         con = None
         try:
+            print("CONNECT")
             # read the object from the database
             con = sqlite3.connect('database.db')
             cur = con.cursor()
@@ -79,7 +93,6 @@ class TransactionBean(object):
             con = sqlite3.connect('database.db')
             cur = con.cursor()
             table = self.__class__.obj.__name__
-            properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
             columns = ""
             values = []
             for p in properties:
@@ -99,6 +112,7 @@ class TransactionBean(object):
             if con:
                 con.close()
         return returnid
+        return 1
     
     """
     Cancels any changes to the object
@@ -108,24 +122,18 @@ class TransactionBean(object):
 
 
 class UserBean(TransactionBean):
+    properties = { "address",
+            "email_address",
+            "mobile_number",
+            "name",
+            "phone_number"
+        }
+    fixed = {}
     obj = User.User
-    selectquery = None
-    commitquery = None
     table = "User"
-    
-    def __init__(self, id=None):
-        super(UserBean, self ).__init__(id)
 
 class AdministratorBean(UserBean):
-    def __init__(self, id=None):
-        if id != None:
-            self.__class__.selectquery = "SELECT address, email_address, id, mobile_number," + \
-                    "name, phone_number, title FROM User WHERE id=" + str(id) + " AND level=9;"
-            self.__class__.colums = ["address", "email_address", "id", "mobile_number",
-                    "name", "phone_number", "title"]
-        super(UserBean, self ).__init__(id)
-    def commit(self):
-        
+    fixed = {"level": 9}
 
 class PoolShopBean(UserBean):
     pass

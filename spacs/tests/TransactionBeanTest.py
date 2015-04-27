@@ -25,7 +25,7 @@ class TransactionBeanTest(unittest.TestCase):
         id = tb.commit()
         
         # Load the user again
-        tb = TransactionBean.UserBean(id)
+        tb = TransactionBean.UserBean({"id": id})
         user = tb.get_object()
         
         #Check the values are right
@@ -60,7 +60,7 @@ class TransactionBeanTest(unittest.TestCase):
         id = tb.commit()
         
         # Load the user again
-        tb = TransactionBean.AdministratorBean(id)
+        tb = TransactionBean.AdministratorBean({"id": id})
         user = tb.get_object()
         
         #Check the values are right
