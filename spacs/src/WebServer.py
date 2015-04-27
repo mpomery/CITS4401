@@ -2,6 +2,7 @@ import BaseHTTPServer
 import LogHandler
 import string
 import os
+import API
 
 def start():
     PORT = 8000
@@ -36,10 +37,17 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
     """
     def do_GET(self):
         if string.lower(self.path).startswith("/api/"):
-            LogHandler.log_warning("API Request")
             self.handle_api_call()
         else:
-            LogHandler.log_warning("Web Request")
+            self.handle_web_call()
+    
+    """
+    Handle POST requests to the server
+    """
+    def do_POST(self):
+        if string.lower(self.path).startswith("/api/"):
+            self.handle_api_call()
+        else:
             self.handle_web_call()
     
     """
@@ -55,13 +63,51 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
     Handles all calls to the API
     """
     def handle_api_call(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write("<html><head><title>API</title></head>")
-        self.wfile.write("<body>")
-        self.wfile.write("%s" % self.path)
-        self.wfile.write("</body>")
+        # Map API Calls to functions
+        api_mapping={
+                "default": API.bad_call,
+                "auth/login": API.not_implimented,
+                "auth/logout": API.not_implimented,
+                "ptu/update": API.not_implimented,
+                "ptu/urgent": API.not_implimented,
+                "psa/add": API.not_implimented,
+                "psa/edit": API.not_implimented,
+                "psa/remove": API.not_implimented,
+                "po/add": API.not_implimented,
+                "po/edit": API.not_implimented,
+                "po/remove": API.not_implimented,
+                "ptu/add": API.not_implimented,
+                "ptu/edit": API.not_implimented,
+                "ptu/remove": API.not_implimented
+        }
+        
+        # Get the API Call and the parameter
+        call = string.lower(self.path)[5:]
+        parameters = ""
+        if call.count('/') == 2:
+            call, parameters = call.rsplit("/", 1)
+        
+        # Grab the data
+        data_length = self.headers.getheader('content-length')
+        if data_length == None:
+            data = "{}"
+        else:
+            data_length = int(data_length)
+            data = self.rfile.read(data_length)
+        print(data)
+        
+        # Get the mapping
+        try:
+            command = api_mapping[call]
+            self.send_response(200)
+        except KeyError:
+            LogHandler.log_warning("Illegal API Call: " + str(call))
+            command = api_mapping["default"]
+            self.send_response(400)
+        
+        command(data, parameters)
+        
+        
     
     """
     Handles all calls to the main web server
