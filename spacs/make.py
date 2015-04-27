@@ -42,7 +42,8 @@ def build_database():
             `address`	TEXT,
             `email_address`	TEXT,
             `phone_number`	TEXT,
-            `mobile_number`	TEXT
+            `mobile_number`	TEXT,
+            `level`	INTEGER
             );"""
     
     con = None

@@ -18,39 +18,44 @@ class TransactionBean(object):
     Loads an object out of the database and into an an object
     """
     def __init__(self, id=None):
-        # Creating a new object, so return an empty one
-        if id == None:
-            self.object = self.__class__.obj()
-            return
+        if self.__class__.selectquery == None or id==None:
+            # Creating a new object, so return an empty one
+            if id == None:
+                self.object = self.__class__.obj()
+                return
+            
+            # Get the objects properties
+            properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
+            self.__class__.colums = []
+            columnsstring = ""
+            # Create the SQL
+            for p in properties:
+                columnsstring += str(p) + ", "
+                self.__class__.colums.append(str(p))
+            columnsstring = columnsstring[0:-2]
+            
+            if self.__class__.table == None:
+                self.__class__.table = self.__class__.obj.__name__
+            # Read record from table
+            self.__class__.selectquery = "SELECT " + columnsstring + " FROM " + self.__class__.table + " WHERE id=" + str(id) + ";"
         
-        
-        # Get the objects properties
-        properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
-        columns = []
-        columnsstring = ""
-        
-        for p in properties:
-            columnsstring += str(p) + ", "
-            columns.append(str(p))
-        columnsstring = columnsstring[0:-2]
+        print("QUERY: " + str(self.__class__.selectquery))
         
         con = None
         try:
             # read the object from the database
             con = sqlite3.connect('database.db')
             cur = con.cursor()
-            table = self.__class__.obj.__name__
-            # Read record from table
-            query = "SELECT " + columnsstring + " FROM " + table + " WHERE id=" + str(id) + ";"
-            cur.execute(query)
+            cur.execute(self.__class__.selectquery)
             data = cur.fetchone()
-            
-            # Put read data into an object]
-            self.object = self.__class__.obj(id)
-            for i in range(len(columns)):
-                p = columns[i]
-                v = data[i]
-                setattr(self.object, p, v)
+            # Put read data into an object
+            self.object = self.__class__.obj()
+            print(data)
+            if data != None:
+                for i in range(len(self.__class__.colums)):
+                    p = self.__class__.colums[i]
+                    v = data[i]
+                    setattr(self.object, p, v)
             
             cur.close()
         except sqlite3.Error, e:
@@ -85,6 +90,7 @@ class TransactionBean(object):
             query = "INSERT INTO " + table + " (" + columns + ") VALUES (" + valuestring + ");"
             cur.execute(query, tuple(values))
             returnid = cur.lastrowid
+            print("RID: " + str(returnid))
             cur.close()
             con.commit()
         except sqlite3.Error, e:
@@ -103,9 +109,23 @@ class TransactionBean(object):
 
 class UserBean(TransactionBean):
     obj = User.User
+    selectquery = None
+    commitquery = None
+    table = "User"
+    
+    def __init__(self, id=None):
+        super(UserBean, self ).__init__(id)
 
 class AdministratorBean(UserBean):
-    pass
+    def __init__(self, id=None):
+        if id != None:
+            self.__class__.selectquery = "SELECT address, email_address, id, mobile_number," + \
+                    "name, phone_number, title FROM User WHERE id=" + str(id) + " AND level=9;"
+            self.__class__.colums = ["address", "email_address", "id", "mobile_number",
+                    "name", "phone_number", "title"]
+        super(UserBean, self ).__init__(id)
+    def commit(self):
+        
 
 class PoolShopBean(UserBean):
     pass
