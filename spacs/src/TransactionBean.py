@@ -5,6 +5,7 @@ import PoolTestingUnit
 import inspect
 
 
+#TODO: Comment this class
 """
 Transaction Beans Simplify Reading and writing from the database
 They should inherit code from the top TransactionBean object and make minimal changes to
@@ -25,7 +26,6 @@ class TransactionBean(object):
         
         # Get the objects properties
         properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
-        print("Properties")
         columns = []
         columnsstring = ""
         
@@ -33,8 +33,6 @@ class TransactionBean(object):
             columnsstring += str(p) + ", "
             columns.append(str(p))
         columnsstring = columnsstring[0:-2]
-
-        print("End Properties")
         
         con = None
         try:
@@ -42,13 +40,12 @@ class TransactionBean(object):
             con = sqlite3.connect('database.db')
             cur = con.cursor()
             table = self.__class__.obj.__name__
-            #TODO: Read * from self.__class__.__name__ table
+            # Read record from table
             query = "SELECT " + columnsstring + " FROM " + table + " WHERE id=" + str(id) + ";"
-            print(query)
             cur.execute(query)
             data = cur.fetchone()
             
-            #TODO: Put read data into an object]
+            # Put read data into an object]
             self.object = self.__class__.obj(id)
             for i in range(len(columns)):
                 p = columns[i]
@@ -85,13 +82,7 @@ class TransactionBean(object):
                 values.append(getattr(self.object, p))
             columns = columns[0:-2]
             valuestring = ("?, " * len(values))[0:-2]
-            print(columns)
-            print(valuestring)
-            print(values)
             query = "INSERT INTO " + table + " (" + columns + ") VALUES (" + valuestring + ");"
-            
-            print(query)
-            print(str(tuple(values)))
             cur.execute(query, tuple(values))
             returnid = cur.lastrowid
             cur.close()
