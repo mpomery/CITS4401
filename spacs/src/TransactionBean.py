@@ -61,18 +61,24 @@ class TransactionBean(object):
             con = sqlite3.connect('database.db')
             cur = con.cursor()
             cur.execute(selectquery)
-            data = cur.fetchone()
+            data = cur.fetchall()
             # Put read data into an object
-            self.object = self.__class__.obj()
-            if data != None:
-                for i in range(len(self.__class__.properties)):
-                    p = self.__class__.properties[i]
-                    v = data[i]
-                    #print("AA: " + str(p) + ":" + str(v))
-                    setattr(self.object, str(p), v)
-                for key, val in searchterms.iteritems():
-                    setattr(self.object, str(key), val)
-            
+            if len(data) == 0:
+                self.object = None
+            else:
+                self.object = []
+                for i in range(len(data)):
+                    new = self.__class__.obj()
+                    for j in range(len(self.__class__.properties)):
+                        p = self.__class__.properties[j]
+                        v = data[i][j]
+                        #print("AA: " + str(p) + ":" + str(v))
+                        setattr(new, str(p), v)
+                    for key, val in searchterms.iteritems():
+                        setattr(new, str(key), val)
+                    self.object.append(new)
+                if len(self.object) == 1:
+                    self.object = self.object[0]
             cur.close()
         except sqlite3.Error, e:
                 LogHandler.log_error("Database Issue: %s" % e.args[0])

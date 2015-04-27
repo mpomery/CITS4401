@@ -2,6 +2,12 @@ import unittest
 import TransactionBean
 
 class TransactionBeanTest(unittest.TestCase):
+    def test_nonexistant_user(self):
+        tb = TransactionBean.UserBean({"id": -1})
+        user = tb.get_object()
+        self.assertEquals(None, user)
+        
+    
     def test_create_user(self):
         # Test Insert Variables
         title = "Mr"
