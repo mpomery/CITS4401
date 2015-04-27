@@ -26,8 +26,10 @@ class TransactionBean(object):
     """
     def __init__(self, searchterms = None):
         # Creating a new object, so return an empty one
-        print("RUNNING")
+        #print("RUNNING")
+        self.insert = False
         if searchterms == None:
+            self.insert = True
             self.object = self.__class__.obj()
             return
         
@@ -49,27 +51,27 @@ class TransactionBean(object):
             limiter += "AND " + str(key) + "=" + str(val) + " "
         
         # Read record from table
-        self.__class__.selectquery = "SELECT " + selecting + " FROM " + self.__class__.table + \
-        " WHERE " + search + " " +  limiter + ";"
+        selectquery = "SELECT " + selecting + " FROM " + self.__class__.table + \
+                " WHERE " + search + " " +  limiter + ";"
         
-        print("QUERY: " + str(self.__class__.selectquery))
         
         con = None
         try:
-            print("CONNECT")
             # read the object from the database
             con = sqlite3.connect('database.db')
             cur = con.cursor()
-            cur.execute(self.__class__.selectquery)
+            cur.execute(selectquery)
             data = cur.fetchone()
             # Put read data into an object
             self.object = self.__class__.obj()
-            print(data)
             if data != None:
-                for i in range(len(self.__class__.colums)):
-                    p = self.__class__.colums[i]
+                for i in range(len(self.__class__.properties)):
+                    p = self.__class__.properties[i]
                     v = data[i]
-                    setattr(self.object, p, v)
+                    #print("AA: " + str(p) + ":" + str(v))
+                    setattr(self.object, str(p), v)
+                for key, val in searchterms.iteritems():
+                    setattr(self.object, str(key), val)
             
             cur.close()
         except sqlite3.Error, e:
@@ -89,21 +91,36 @@ class TransactionBean(object):
     """
     def commit(self, msg=None):
         returnid = None
+        
+        if self.__class__.table == None:
+            self.__class__.table = self.__class__.obj.__name__
+        
+        if self.insert:
+            valuestring = "?, " * (len(self.__class__.properties) + len(self.__class__.fixed))
+            valuestring = valuestring[0:-2]
+            fields = ""
+            values = []
+            for property in self.__class__.properties:
+                fields += str(property) + ", "
+                values.append(getattr(self.object, property))
+            for key, val in self.__class__.fixed.iteritems():
+                fields += str(key) + ", "
+                values.append(val)
+            fields = fields[0:-2]
+            query = "INSERT INTO " + self.__class__.table + " (" + fields + \
+                    ") VALUES (" + valuestring + ");"
+        else:
+            query = ""
+        
+        #print("QUERY: " + str(query))
+        #print("PROPERTIES: " + str(tuple(values)))
+        
         try:
             con = sqlite3.connect('database.db')
             cur = con.cursor()
-            table = self.__class__.obj.__name__
-            columns = ""
-            values = []
-            for p in properties:
-                columns += str(p) + ", "
-                values.append(getattr(self.object, p))
-            columns = columns[0:-2]
-            valuestring = ("?, " * len(values))[0:-2]
-            query = "INSERT INTO " + table + " (" + columns + ") VALUES (" + valuestring + ");"
-            cur.execute(query, tuple(values))
+            cur.execute(query, values)
             returnid = cur.lastrowid
-            print("RID: " + str(returnid))
+            #print("RID: " + str(returnid))
             cur.close()
             con.commit()
         except sqlite3.Error, e:
@@ -122,12 +139,13 @@ class TransactionBean(object):
 
 
 class UserBean(TransactionBean):
-    properties = { "address",
+    properties = [ "address",
             "email_address",
             "mobile_number",
             "name",
-            "phone_number"
-        }
+            "phone_number",
+            "title"
+        ]
     fixed = {}
     obj = User.User
     table = "User"
@@ -136,10 +154,10 @@ class AdministratorBean(UserBean):
     fixed = {"level": 9}
 
 class PoolShopBean(UserBean):
-    pass
+    fixed = {"level": 7}
 
 class PoolOwnerBean(UserBean):
-    pass
+    fixed = {"level": 1}
 
 class PoolTestingUnitBean(TransactionBean):
     pass
