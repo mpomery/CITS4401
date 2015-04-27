@@ -1,19 +1,20 @@
 \section{Design Considerations}
 
 \par
-The following are a list of considerations that have been made. These choices affected what the system looks like.
+Decisions have been made to meet the quality requirements of the SPACS system listed below. These decisions aim to maximize each requirement while keeping the cost of development and running the system as low as possible.
 
 \begin{enumerate}
-	\item Python
-	\item Statelessness
-	\item API Based
-	\item Transaction Beans
+	\item Performance
 	\item Reliability
+	\item Usability
+	\item Portability
+	\item Modifiability
+	\item Future Requirements
 \end{enumerate}
 
 \subsection{Python}
 \par
-Python has been chosen as the implementation language over other object oriented languages such as Java. This system is small and python allows for rapid development. Well written Python code also has the advantage of being self documenting, meaning less time has to be spent writing comments and keeping them up to date.
+Python has been chosen as the implementation language over other object oriented languages such as Java due to it's lightweight footprint and portability. Python allows for rapid development and testing, making the system easy to modify. Well written Python code also has the advantage of being self documenting, meaning that is highly readable so less comments are required.
 
 \par
 Unlike other object oriented languages, Python is dynamically typed. This means that the types of each variable are not defined while developing, but rather at run time. Python is also an interpreted language, rather than a compiled one. This means that things such as type errors and non existent variables will only be found during run time. A full set of testing and good logging will minimize the risk of this causing issues while the system is in production.
@@ -21,11 +22,9 @@ Unlike other object oriented languages, Python is dynamically typed. This means 
 \par
 As python has been chosen, class and method names in this document are named according to the Python PEP 8 Style Guide.
 
-% Python on this project as a testing ground
-
 \subsection{Statelessness}
 \par
-The application has been developed with scalability in mind meaning that all sessions should be stateless and information should be able to be passed from any server to any other server. Multiple instances of the server should also be able to communicate with the database. This will allow the application to scale in the event where the number of users increases past an individual servers load.
+The application has been developed with scalability in mind meaning that all sessions should be stateless and information should not be managed by the program once it has finished with it. It will be possible to set up multiple instances of the server that are able to communicate with the same database. This will allow the application to scale in the event where the number of users increases past an individual servers load.
 
 \par
 Adding this scalability will require a load balancer to sit between the users and the server instances. The addition of the load balancer will also allow individual servers to be taken offline for updates or if there is an issue with a machine.
