@@ -17,39 +17,44 @@ class TransactionBean(object):
     Loads an object out of the database and into an an object
     """
     def __init__(self, id=None):
-        LogHandler.log_warning("Loading Bean: " + str(self.__class__.__name__))
-        LogHandler.log_warning("Loading Bean: " + str(self.__class__.obj))
-        LogHandler.log_warning("Loading Bean: " + str(self.__class__.obj.__name__))
         # Creating a new object, so return an empty one
-        # Get the objects properties
-        properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
-        print("Properties")
-        for p in properties:
-            print(str(p))
-        print("End Properties")
-        
         if id == None:
             self.object = self.__class__.obj()
             return
         
-        con = None
         
+        # Get the objects properties
+        properties = [prop for prop in dir(self.__class__.obj) if isinstance(getattr(self.__class__.obj, prop), property)]
+        print("Properties")
+        columns = []
+        columnsstring = ""
+        
+        for p in properties:
+            columnsstring += str(p) + ", "
+            columns.append(str(p))
+        columnsstring = columnsstring[0:-2]
+
+        print("End Properties")
+        
+        con = None
         try:
             # read the object from the database
             con = sqlite3.connect('database.db')
             cur = con.cursor()
             table = self.__class__.obj.__name__
-            query = "SELECT * FROM " + table + " WHERE id=" + str(id) + ";"
+            #TODO: Read * from self.__class__.__name__ table
+            query = "SELECT " + columnsstring + " FROM " + table + " WHERE id=" + str(id) + ";"
             print(query)
             cur.execute(query)
-            print(cur.fetchone())
+            data = cur.fetchone()
             
-            #TODO: Read * from self.__class__.__name__ table
+            #TODO: Put read data into an object]
+            self.object = self.__class__.obj(id)
+            for i in range(len(columns)):
+                p = columns[i]
+                v = data[i]
+                setattr(self.object, p, v)
             
-            #TODO: Put read data into an object
-            data = ""
-            self.object = self.__class__.obj(id, data)
-            #in vars(self.__class__.obj).iteritems():
             cur.close()
         except sqlite3.Error, e:
                 LogHandler.log_error("Database Issue: %s" % e.args[0])

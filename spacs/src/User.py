@@ -3,20 +3,14 @@ import Validator
 class User(object):
     
     
-    def __init__(self, id=None, data=None):
+    def __init__(self, id=None):
         self.__id = id
-        """self.__title = title
-        self.__name = name
-        self.__address = address
-        self.__email_address = email_address
-        self.__mobile_number = mobile_number
-        self.__phone_number = phone_number"""
-        self.__title = None
-        self.__name = None
-        self.__address = None
-        self.__email_address = None
-        self.__mobile_number = None
-        self.__phone_number = None
+        self.__title = str()
+        self.__name = str()
+        self.__address = str()
+        self.__email_address = str()
+        self.__mobile_number = str()
+        self.__phone_number = str()
     
     @property
     def id(self):
