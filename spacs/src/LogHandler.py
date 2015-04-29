@@ -4,7 +4,7 @@ import logging
 
 LogFormat = "AAAA"
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.WARN)
 
 def log_exception():
     # Catch Everything, log it and restart

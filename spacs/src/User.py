@@ -58,21 +58,21 @@ class User(object):
     
     @email_address.setter
     def email_address(self, email_address):
+        self.__email_address = email_address
         if not Validator.is_email(email_address):
             raise ValueError("Email Address is Invalid")
-        self.__email_address = email_address
     
     @phone_number.setter
     def phone_number(self, phone_number):
+        self.__phone_number = phone_number
         if not Validator.is_phone_number(phone_number):
             raise ValueError("Phone Number is not valid")
-        self.__phone_number = phone_number
     
     @mobile_number.setter
     def mobile_number(self, mobile_number):
+        self.__mobile_number = mobile_number
         if not Validator.is_phone_number(mobile_number):
             raise ValueError("Phone Number is not valid")
-        self.__mobile_number = mobile_number
 
 class Administrator(User):
     pass
