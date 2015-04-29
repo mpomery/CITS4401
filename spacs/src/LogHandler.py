@@ -4,6 +4,8 @@ import logging
 
 LogFormat = "AAAA"
 
+logging.basicConfig(level=logging.INFO)
+
 def log_exception():
     # Catch Everything, log it and restart
     (exc_type, exc_value, exc_traceback) = sys.exc_info()
