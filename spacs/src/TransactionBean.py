@@ -134,7 +134,7 @@ class TransactionBean(object):
                     try:
                         setattr(new, str(p), v)
                     except ValueError, ve:
-                        LogHandler.log_error("Database: Select: Exception: %s" % ve.args[0])
+                        LogHandler.log_error("Database: Select: Attribute Exception: %s" % ve.args[0])
                 for key, val in searchterms.iteritems():
                     setattr(new, str(key), val)
                 self.objects.append(new)
@@ -167,7 +167,7 @@ class TransactionBean(object):
                 values.append(getattr(object, property))
             
             for key, val in self.__class__.fixed.iteritems():
-                fields += str(key) + ", "
+                fields += str(key) + "=?, "
                 values.append(val)
             fields = fields[0:-2]
             values.append(getattr(object, self.__class__.id_property))
@@ -175,9 +175,8 @@ class TransactionBean(object):
             query = "UPDATE " + self.__class__.table + " SET " + fields + " WHERE " +\
                     str(self.__class__.id_property)+ "=?;"
             try:
-                LogHandler.log_info("Database: Save(" + str(self.__class__.__name__) + "): "+ query)
+                LogHandler.log_info("Database: Save(" + str(self.__class__.__name__) + "): "+ query + "\n" + str(tuple(values)))
                 self.cur.execute(query, values)
-                data = self.cur.fetchall()
             except sqlite3.Error, e:
                 LogHandler.log_error("Database: Exception: %s" % e.args[0])
         pass
@@ -198,6 +197,12 @@ class TransactionBean(object):
     def rollback(self, msg=None):
         try:
             self.con.rollback()
+        except sqlite3.Error, e:
+            LogHandler.log_error("Database: Exception: %s" % e.args[0])
+    
+    def close(self, msg=None):
+        try:
+            self.con.close()
         except sqlite3.Error, e:
             LogHandler.log_error("Database: Exception: %s" % e.args[0])
 
