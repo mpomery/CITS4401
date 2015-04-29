@@ -3,6 +3,7 @@ import LogHandler
 import User
 import PoolTestingUnit
 import inspect
+import Authentication
 
 """
 Avoid using this
@@ -46,7 +47,6 @@ class TransactionBean(object):
     Create a new object in the database and return it (with its id set)
     """
     def create_object(self):
-        LogHandler.log_info("Database: Create(" + str(self.__class__.__name__) + ")")
         new_object = self.__class__.obj()
         self.objects = [new_object]
         
@@ -72,7 +72,11 @@ class TransactionBean(object):
             LogHandler.log_info("Database: Create(" + str(self.__class__.__name__) + "): Values:" + str(values))
             self.cur.execute(query, values)
             returnid = self.cur.lastrowid
+            print("SETTING: " + str(self.__class__.id_property) + " to " +str(returnid))
+            old = getattr(new_object, str(self.__class__.id_property))
             setattr(new_object, str(self.__class__.id_property), returnid)
+            new = getattr(new_object, str(self.__class__.id_property))
+            print("WAS: " + str(old) + " IS: " +str(new))
         except sqlite3.Error, e:
             LogHandler.log_error("Database: Exception: %s" % e.args[0])
         
@@ -97,27 +101,31 @@ class TransactionBean(object):
         selecting = ""
         for porperty in self.__class__.properties:
             selecting += porperty + ", "
-        selecting = selecting[0:-2]
+        selecting += str(self.__class__.id_property)
         
+        values = []
         search = ""
         if searchterms != None:
             for key, val in searchterms.iteritems():
-                search += "AND " + str(key) + "=" + str(val) + " "
+                search += "AND " + str(key) + "=? "
+                values.append(val)
             search = search[4:]
         else:
             search = "1==1"
         
         limiter = ""
         for key, val in self.__class__.fixed.iteritems():
-            limiter += "AND " + str(key) + "=" + str(val) + " "
+            limiter += "AND " + str(key) + "=? "
+            values.append(val)
         
         # Read record from table
         selectquery = "SELECT " + selecting + " FROM " + self.__class__.table + \
                 " WHERE " + search + " " +  limiter + ";"
         data = None
         try:
-            LogHandler.log_info("Database: Select(" + str(self.__class__.__name__) + "): "+ selectquery)
-            self.cur.execute(selectquery)
+            LogHandler.log_info("Database: Select(" + str(self.__class__.__name__) + "): " + selectquery)
+            LogHandler.log_info("Database: Select(" + str(self.__class__.__name__) + "): " + str(tuple(values)))
+            self.cur.execute(selectquery, tuple(values))
             data = self.cur.fetchall()
         except sqlite3.Error, e:
             LogHandler.log_error("Database: Exception: %s" % e.args[0])
@@ -134,9 +142,14 @@ class TransactionBean(object):
                     try:
                         setattr(new, str(p), v)
                     except ValueError, ve:
-                        LogHandler.log_error("Database: Select: Attribute Exception: %s" % ve.args[0])
+                        LogHandler.log_warning("Database: Select: Attribute Exception: " + str(p) + ": %s" % ve.args[0])
+                try:
+                    setattr(new, self.__class__.id_property, data[i][-1])
+                except ValueError, ve:
+                    LogHandler.log_warning("Database: Select: Attribute Exception: " + str(p) + ": %s" % ve.args[0])
                 for key, val in searchterms.iteritems():
                     setattr(new, str(key), val)
+                    
                 self.objects.append(new)
         return self.objects
     
@@ -157,7 +170,6 @@ class TransactionBean(object):
         valuestring = "?, " * (len(self.__class__.properties) + len(self.__class__.fixed))
         valuestring = valuestring[0:-2]
         
-        LogHandler.log_info("Database: Save(" + str(self.__class__.__name__) + "): ")
         for object in self.objects:
             fields = ""
             values = []
@@ -196,12 +208,14 @@ class TransactionBean(object):
     """
     def rollback(self, msg=None):
         try:
+            LogHandler.log_info("Database: Rollback(" + str(self.__class__.__name__) + "): " + str(msg))
             self.con.rollback()
         except sqlite3.Error, e:
             LogHandler.log_error("Database: Exception: %s" % e.args[0])
     
     def close(self, msg=None):
         try:
+            LogHandler.log_info("Database: Close(" + str(self.__class__.__name__) + "): " + str(msg))
             self.con.close()
         except sqlite3.Error, e:
             LogHandler.log_error("Database: Exception: %s" % e.args[0])
@@ -215,18 +229,32 @@ class UserBean(TransactionBean):
             "phone_number",
             "title"
         ]
-    fixed = {}
     obj = User.User
     table = "User"
+    fixed = {"level": getattr(User.UserTypes, str.upper(obj.__name__))}
 
 class AdministratorBean(UserBean):
-    fixed = {"level": 9}
+    obj = User.Administrator
+    fixed = {"level": getattr(User.UserTypes, str.upper(obj.__name__))}
 
-class PoolShopBean(UserBean):
-    fixed = {"level": 7}
+class PoolShopAdminBean(UserBean):
+    obj = User.PoolShopAdmin
+    fixed = {"level": getattr(User.UserTypes, str.upper(obj.__name__))}
 
 class PoolOwnerBean(UserBean):
-    fixed = {"level": 1}
+    obj = User.PoolOwner
+    fixed = {"level": getattr(User.UserTypes, str.upper(obj.__name__))}
 
 class PoolTestingUnitBean(TransactionBean):
     pass
+
+class AuthenticationBean(TransactionBean):
+    id_property = "id"
+    properties = [
+            "username",
+            "password"
+        ]
+    fixed = {}
+    obj = Authentication.Authentication
+    table = "Authentication"
+

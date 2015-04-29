@@ -45,12 +45,19 @@ def build_database():
             `level`	INTEGER
             );"""
     
+    create_user_auth_table = """CREATE TABLE `Authentication` (
+            `id`	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+            `username`	TEXT,
+            `password`	TEXT
+            );"""
+    
     con = None
     try:
         # read the object from the database
         con = sqlite3.connect('target/database.db')
         cur = con.cursor()
         cur.execute(create_user_table)
+        cur.execute(create_user_auth_table)
     except sqlite3.Error, e:
         print("Database Issue: %s" % e.args[0])
     finally:

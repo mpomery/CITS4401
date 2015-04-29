@@ -1,7 +1,13 @@
 import Validator
 
+
+class UserTypes(object):
+    USER = -1
+    ADMINISTRATOR = 9
+    POOLSHOPADMIN = 7
+    POOLOWNER = 1
+
 class User(object):
-    
     
     def __init__(self, id=None):
         self.__id = id
@@ -11,6 +17,7 @@ class User(object):
         self.__email_address = str()
         self.__mobile_number = str()
         self.__phone_number = str()
+        self.__user_type = getattr(UserTypes, str.upper(self.__class__.__name__))
     
     @property
     def id(self):
@@ -77,7 +84,7 @@ class User(object):
 class Administrator(User):
     pass
 
-class PoolShop(User):
+class PoolShopAdmin(User):
     pass
 
 class PoolOwner(User):
