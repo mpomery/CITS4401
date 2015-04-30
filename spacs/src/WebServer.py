@@ -112,7 +112,7 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         authed = False
         ret = ""
         try:
-            ret = API.auth_login(jsondata, "")
+            ret, user = API.auth_login(jsondata, "", "")
         except KeyError:
             LogHandler.log_error("User failed to auth\r\n" + str(jsondata))
         if ret == {"error": "success"}:
@@ -136,7 +136,7 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         
         # Execute the mapping and respond
         try:
-            response = command(jsondata, parameter)
+            response = command(jsondata, parameter, user)
         except KeyError, ke:
             LogHandler.log_error("data was malformed or missing when processing\r\n" + \
                     str(jsondata) + "\r\n" + str(ke[0]))
