@@ -12,3 +12,20 @@
 "password": "pppp"
 }
 }
+
+
+{"username": "hi", "password": "ho",
+"user": {
+"id":"1",
+"address": "dd",
+"email_address": "dd",
+"mobile_number": "dd",
+"name": "dd",
+"phone_number": "dd",
+"title": "dd"
+},
+"auth":{
+"username": "1234",
+"password": "pppp"
+}
+}
