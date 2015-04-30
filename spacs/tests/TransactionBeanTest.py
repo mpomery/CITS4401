@@ -5,7 +5,6 @@ import LogHandler
 class TransactionBeanTest(unittest.TestCase):
     
     def test_basic_create_commit(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         testname = "Hagrid"
         tb = TransactionBean.UserBean()
         user = tb.create_object()
@@ -18,7 +17,6 @@ class TransactionBeanTest(unittest.TestCase):
         self.assertEquals(testname, user.name)
     
     def test_basic_create_rollback(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         testname = "Hagrid"
         tb = TransactionBean.UserBean()
         user = tb.create_object()
@@ -31,7 +29,6 @@ class TransactionBeanTest(unittest.TestCase):
         self.assertEquals(user, None)
     
     def test_basic_create_update(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         testname1 = "Hagrid"
         testname2 = "Harry"
         tb = TransactionBean.UserBean()
@@ -53,13 +50,11 @@ class TransactionBeanTest(unittest.TestCase):
         self.assertEquals(testname2, user.name)
     
     def test_nonexistant_user(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         tb = TransactionBean.UserBean()
         user = tb.get_object({"id": -1})
         self.assertEquals(None, user)
     
     def test_create_user(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         # Test Insert Variables
         title = "Mr"
         name = "Mitchell Pomery"
@@ -97,7 +92,6 @@ class TransactionBeanTest(unittest.TestCase):
         self.assertEqual(user.phone_number, phone_number)
     
     def test_edit_user(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         # Test Insert Variables
         title = "Mr"
         name = "Mitchell Pomery"
@@ -156,7 +150,6 @@ class TransactionBeanTest(unittest.TestCase):
         self.assertEqual(user.phone_number, phone_number2)
     
     def test_edit_administrator(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         # Test Insert Variables
         title = "Mr"
         name = "Mitchell Pomery"
@@ -215,7 +208,6 @@ class TransactionBeanTest(unittest.TestCase):
         self.assertEqual(user.phone_number, phone_number2)
     
     def test_create_administrator(self):
-        LogHandler.log_error("STARTING: test_basic_create_commit")
         # Test Insert Variables
         title = "Mr"
         name = "Mitchell Pomery"
