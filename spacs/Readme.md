@@ -76,10 +76,14 @@ than what I have written previously.
 
 While working in this project, I listened to the talks from PyCon 2015. I would recommend them
 to anyone looking to learn python. One of the talks talked about python's multithreading ability.
-Unfortunately it works differently to what I thought, and so won't run as fast as I would expect under
-heavy load. Fortunately the statelessness means that more servers can be started to deal with load issues.
+Unfortunately it works differently to what I thought, and so won't run as fast as I would expect
+under heavy load. Fortunately the statelessness means that more servers can be started to deal with
+load issues.
 
+### Universal Modelling Language
 
+I've never found anything Universal about UML. Everywhere seems to do it ever so slightly
+different.
 
 
 
