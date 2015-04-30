@@ -51,15 +51,15 @@
 
 \usecase
 {urgent\_update}
-{PoolTestingUnit, PoolShop, PoolOwner}
-{Store collected information received from the PoolTestingUnit in the system and alert the PoolOwner and PoolShop that there is a problem.}
+{PoolTestingUnit, PoolShopAdmin, PoolOwner}
+{Store collected information received from the PoolTestingUnit in the system and alert the PoolOwner and PoolShopAdmin that there is a problem.}
 {PoolTestingUnit is authenticated}
 {
 \begin{enumerate}
 \item Use case starts when PoolTestingUnit sends data with alerts.
 \item Data is checked for any errors.
 \item Records from the data are stored for later analysis.
-\item An email is sent to the PoolShopOwner and PoolOwner.
+\item An email is sent to the PoolShopAdmin and PoolOwner.
 \item Use case ends.
 \end{enumerate}
 }
@@ -68,21 +68,21 @@
 \item The data does not validate
 \begin{enumerate}
 \item Received data is logged for analysis
-\item Email has been sent to PoolShopOwner and PoolOwner
+\item Email has been sent to PoolShopAdmin and PoolOwner
 \end{enumerate}
 \end{enumerate}
 }
 {
 \begin{enumerate}
-\item Success: Data has been stored and an email has been sent to PoolShopOwner and PoolOwner.
-\item Failure: Data has been stored in a log for analysis by an Administrator and an email has been sent to PoolShopOwner and PoolOwner.
+\item Success: Data has been stored and an email has been sent to PoolShopAdmin and PoolOwner.
+\item Failure: Data has been stored in a log for analysis by an Administrator and an email has been sent to PoolShopAdmin and PoolOwner.
 \end{enumerate}
 }
 
 \usecase
 {generate\_report}
-{ReportGenerator, PoolOwner, PoolShop}
-{Provide latest information about a pool to the PoolOwner and the PoolShop}
+{ReportGenerator, PoolOwner, PoolShopAdmin}
+{Provide latest information about a pool to the PoolOwner and the PoolShopAdmin}
 {First week of the PTU or a month since the last report for each pool}
 {
 \begin{enumerate}
@@ -114,7 +114,7 @@
 
 \usecase
 {add\_pool\_shop}
-{Administrator, PoolShop}
+{Administrator, PoolShopAdmin}
 {To add a pool shop to the system.}
 {Administrator is authenticated.}
 {
@@ -122,7 +122,7 @@
 \item Use case starts when an Administrator goes to the add pool shop page.
 \item Administrator user enters information about the pool shop.
 \item Information is validated to check for errors.
-\item Information is stored and a new PoolShop is created.
+\item Information is stored and a new PoolShopAdmin is created.
 \end{enumerate}
 }
 {
@@ -136,14 +136,14 @@
 }
 {
 \begin{enumerate}
-\item Success: Information is stored and a new PoolShop is created.
+\item Success: Information is stored and a new PoolShopAdmin is created.
 \item Failure: No change to the system.
 \end{enumerate}
 }
 
 \usecase
 {edit\_pool\_shop}
-{Administrator, PoolShop}
+{Administrator, PoolShopAdmin}
 {To edit a pool shop in the system.}
 {Administrator is authenticated.}
 {
@@ -151,7 +151,7 @@
 \item Use case starts when an Administrator goes to the edit pool shop page.
 \item Administrator user changes information about the pool shop.
 \item Information is validated to check for errors.
-\item Information is stored and a PoolShop is updated.
+\item Information is stored and a PoolShopAdmin is updated.
 \end{enumerate}
 }
 {
@@ -165,20 +165,20 @@
 }
 {
 \begin{enumerate}
-\item Success: Information is stored and PoolShop is updated.
+\item Success: Information is stored and PoolShopAdmin is updated.
 \item Failure: No change to the system.
 \end{enumerate}
 }
 
 \usecase
 {remove\_pool\_shop}
-{Administrator, PoolShop}
+{Administrator, PoolShopAdmin}
 {To remove a pool shop from the system.}
 {Administrator is authenticated.}
 {
 \begin{enumerate}
 \item Use case starts when an Administrator goes to the remove pool shop page.
-\item Administrator confirms they want to remove PoolShop.
+\item Administrator confirms they want to remove PoolShopAdmin.
 \end{enumerate}
 }
 {
@@ -191,20 +191,20 @@
 }
 {
 \begin{enumerate}
-\item Success: PoolShop is no longer usable.
+\item Success: PoolShopAdmin is no longer usable.
 \item Failure: No change to the system.
 \end{enumerate}
 }
 
 \usecase
 {add\_pool}
-{PoolShop, PoolTestingUnit}
+{PoolShopAdmin, PoolTestingUnit}
 {To add a pool to the system.}
-{PoolShop is authenticated.}
+{PoolShopAdmin is authenticated.}
 {
 \begin{enumerate}
-\item Use case starts when a PoolShop goes to the add pool page.
-\item PoolShop user enters information about the pool.
+\item Use case starts when a PoolShopAdmin goes to the add pool page.
+\item PoolShopAdmin user enters information about the pool.
 \item Information is validated to check for errors.
 \item Information is stored and a new PoolTestingUnit is created for the pool.
 \end{enumerate}
@@ -213,8 +213,8 @@
 \begin{enumerate}
 \item Invalid Information
 \begin{enumerate}
-\item PoolShop user is informed
-\item PoolShop can modify information and try again.
+\item PoolShopAdmin user is informed
+\item PoolShopAdmin can modify information and try again.
 \end{enumerate}
 \end{enumerate}
 }
@@ -227,13 +227,13 @@
 
 \usecase
 {edit\_pool}
-{PoolShop, PoolTestingUnit}
+{PoolShopAdmin, PoolTestingUnit}
 {To edit a pool in the system.}
-{PoolShop is authenticated.}
+{PoolShopAdmin is authenticated.}
 {
 \begin{enumerate}
-\item Use case starts when a PoolShop goes to the edit pool page.
-\item PoolShop user changes information about the pool shop.
+\item Use case starts when a PoolShopAdmin goes to the edit pool page.
+\item PoolShopAdmin user changes information about the pool shop.
 \item Information is validated to check for errors.
 \item Information is stored and a PoolTestingUnit is updated.
 \end{enumerate}
@@ -242,8 +242,8 @@
 \begin{enumerate}
 \item Invalid Information
 \begin{enumerate}
-\item PoolShop user is informed
-\item PoolShop can modify information and try again.
+\item PoolShopAdmin user is informed
+\item PoolShopAdmin can modify information and try again.
 \end{enumerate}
 \end{enumerate}
 }
@@ -256,13 +256,13 @@
 
 \usecase
 {remove\_pool}
-{PoolShop, PoolTestingUnit}
+{PoolShopAdmin, PoolTestingUnit}
 {To remove a pool from the system.}
-{PoolShop is authenticated.}
+{PoolShopAdmin is authenticated.}
 {
 \begin{enumerate}
-\item Use case starts when and PoolShop goes to the remove pool page.
-\item PoolShop confirms they want to remove PoolTestingUnit.
+\item Use case starts when and PoolShopAdmin goes to the remove pool page.
+\item PoolShopAdmin confirms they want to remove PoolTestingUnit.
 \end{enumerate}
 }
 {
