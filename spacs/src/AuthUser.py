@@ -130,6 +130,7 @@ class EditUser(object):
         self.__authentication = None
         self.__user = None
         self.__level = None
+        self.__id = userid
         self.__is_authed = False
         
         authbean = TransactionBean.AuthenticationBean()
@@ -154,11 +155,11 @@ class EditUser(object):
     
     @property
     def id(self):
-        return self.__user.id
+        return self.__id
         
     def save(self):
         authbean = TransactionBean.AuthenticationBean()
-        auth = authbean.get_object({"id": self.__authentication.id})
+        auth = authbean.get_object({"id": self.__id})
         for property in TransactionBean.AuthenticationBean.properties:
             if str(property) != "id":
                 try:
@@ -170,7 +171,7 @@ class EditUser(object):
         authbean.close()
         
         userbean = self.__class__.bean()
-        user = userbean.get_object({"id": self.__user.id})
+        user = userbean.get_object({"id": self.__id})
         for property in userbean.properties:
             if str(property) != "id":
                 try:
