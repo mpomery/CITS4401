@@ -64,11 +64,9 @@ def auth_logout(data, parameter):
     return {"error": "success"}
 
 """
-Adds an administrator to the system
+Adds a USER to the system
 """
-def administrator_add(data, parameter):
-    au = AuthUser.CreateUser()
-    
+def user_add(data, parameter, au):
     for property in TransactionBean.UserBean.properties:
         try:
             print("Setting UserBean" + str(property) + " To " + data["user"][str(property)])
@@ -86,4 +84,21 @@ def administrator_add(data, parameter):
     id = au.id
     return {"error": "success", "id": id}
 
+"""
+Adds an Administrator to the system
+"""
+def administrator_add(data, parameter):
+    return user_add(data, parameter, AuthUser.CreateAdministrator())
+
+"""
+Adds a Pool Shop Admin to the system
+"""
+def psa_add(data, parameter):
+    return user_add(data, parameter, AuthUser.CreatePoolShopAdmin())
+
+"""
+Adds a Pool Owner to the system
+"""
+def po_add(data, parameter):
+    return user_add(data, parameter, AuthUser.CreatePoolOwner())
 
