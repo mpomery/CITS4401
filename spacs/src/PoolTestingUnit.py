@@ -7,7 +7,7 @@ class PoolTestingUnit(object):
         self.__depth = None
         self.__above_ground = False
         self.__material = str()
-    
+    """
     @property
     def id(self):
         return self.__id
@@ -69,3 +69,6 @@ class PoolTestingUnit(object):
         self.__mobile_number = mobile_number
         if not Validator.is_phone_number(mobile_number):
             raise ValueError("Phone Number is not valid")
+"""
+
+
