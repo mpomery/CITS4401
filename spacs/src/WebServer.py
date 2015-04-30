@@ -68,8 +68,9 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         api_mapping={
                 "default": API.bad_call,
                 "invalid_data": API.invalid_data,
-                "auth/login": API.not_implimented,
-                "auth/logout": API.not_implimented,
+                "not_authed": API.not_authed,
+                "auth/login": API.auth_login,
+                "auth/logout": API.auth_logout,
                 "ptu/update": API.not_implimented,
                 "ptu/urgent": API.not_implimented,
                 "psa/add": API.not_implimented,
@@ -85,9 +86,9 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         
         # Get the API Call and the parameter
         call = string.lower(self.path)[5:]
-        parameters = ""
+        parameter = ""
         if call.count('/') == 2:
-            call, parameters = call.rsplit("/", 1)
+            call, parameter = call.rsplit("/", 1)
         
         # Grab the data
         data_length = self.headers.getheader('content-length')
@@ -99,10 +100,23 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         
         # Check data is valid JSON
         try:
-            json.loads(data)
+            jsondata = json.loads(data)
         except ValueError, e:
-            data = "{}"
+            jsondata = json.loads("{}")
             call = "invalid_data"
+        
+        # Auth
+        authed = False
+        ret = ""
+        try:
+            ret = API.auth_login(jsondata, "")
+        except KeyError:
+            LogHandler.log_error("User failed to auth\r\n" + str(jsondata))
+        if ret == {"error": "success"}:
+            authed = True
+        
+        if not call.startswith("auth") and not authed:
+            call = "not_authed"
         
         # Get the mapping
         try:
@@ -118,10 +132,14 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         self.end_headers()
         
         # Execute the mapping and respond
-        response = command(data, parameters)
+        try:
+            response = command(jsondata, parameter)
+        except KeyError:
+            LogHandler.log_error("data was malformed or missing\r\n" + str(jsondata))
+            response = {"error": "failure"}
         if response == None:
-            response = "{}"
-        self.wfile.write(response)
+            response = {}
+        self.wfile.write(json.dumps(response))
     
     """
     Handles all calls to the main web server
