@@ -64,6 +64,7 @@ class AuthPoolOwner(AuthUser):
 WARNING: This class has a couple opf hacks implimented to get around SQLites lack of multithreading
 """
 class CreateUser(object):
+    #TODO: Disallow multiple users with same username
     userclass = User.User
     bean = TransactionBean.UserBean
     

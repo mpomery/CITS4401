@@ -73,6 +73,9 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
                 "auth/logout": API.auth_logout,
                 "ptu/update": API.not_implimented,
                 "ptu/urgent": API.not_implimented,
+                "admin/add": API.administrator_add,
+                "admin/edit": API.not_implimented,
+                "admin/remove": API.not_implimented,
                 "psa/add": API.not_implimented,
                 "psa/edit": API.not_implimented,
                 "psa/remove": API.not_implimented,
@@ -134,8 +137,9 @@ class WebServer(BaseHTTPServer.BaseHTTPRequestHandler):
         # Execute the mapping and respond
         try:
             response = command(jsondata, parameter)
-        except KeyError:
-            LogHandler.log_error("data was malformed or missing\r\n" + str(jsondata))
+        except KeyError, ke:
+            LogHandler.log_error("data was malformed or missing when processing\r\n" + \
+                    str(jsondata) + "\r\n" + str(ke[0]))
             response = {"error": "failure"}
         if response == None:
             response = {}

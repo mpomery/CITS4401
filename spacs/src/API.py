@@ -1,6 +1,7 @@
 import json
 import LogHandler
 import User
+import AuthUser
 import TransactionBean
 
 #TODO: Remove Magic Strings
@@ -66,12 +67,23 @@ def auth_logout(data, parameter):
 Adds an administrator to the system
 """
 def administrator_add(data, parameter):
-    user = auth(data)
-    if user == None:
-        return """{"ERROR":"Not Authenticated"}"""
+    au = AuthUser.CreateUser()
     
-    newadmin = TransactionBean.Administrator()
+    for property in TransactionBean.UserBean.properties:
+        try:
+            print("Setting UserBean" + str(property) + " To " + data["user"][str(property)])
+            setattr(au.user_info, str(property), data["user"][str(property)])
+        except ValueError, ve:
+            LogHandler.log_warning("Value Error: " + str(ve[0]))
     
-    
+    for property in TransactionBean.AuthenticationBean.properties:
+        try:
+            print("Setting AuthenticationBean" + str(property) + " To " + data["auth"][str(property)])
+            setattr(au.auth_info, str(property), data["auth"][str(property)])
+        except ValueError, ve:
+            LogHandler.log_warning("Value Error: " + str(ve[0]))
+    au.create()
+    id = au.id
+    return {"error": "success", "id": id}
 
 

@@ -1,12 +1,14 @@
-{
-    "token": "[base64string]",
-    "user": {
-        "id": 0,
-        "title": "Mr",
-        "name": "Harry Stevenson",
-        "address": "1 asdasd way, asd st, asda",
-        "email_address": "a@b.c",
-        "mobile_number": "0400000000",
-        "phone_number": "0800000000"
-    }
+{"username": "hi", "password": "ho",
+"user": {
+"address": "aa",
+"email_address": "ss",
+"mobile_number": "ff",
+"name": "as",
+"phone_number": "asadafa",
+"title": "asaasdd"
+},
+"auth":{
+"username": "1234",
+"password": "pppp"
+}
 }
