@@ -1,9 +1,9 @@
 \section{Design Pattern}
 
+\subsection{Singleton Pattern}
 \par
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
-CITS4401 Software Requirements and Design - Practical Assignment.
+The singleton pattern is suitable for the SPACS application to make sure that logging and settings are easily accessible. By using the singleton pattern, the LogHandler object is created once, and whenever something is logged, it will be managed by the same Logging object in the background. This allows for logging to be set up once during initialization then called from anywhere within the program with ease.
+
+\subsection{Interface Inheritance}
+\par
+Inheritance can drastically reduce the amount of code written. By writing one class that can manage everything for it's children classes, writing the remainder of the application becomes easier. The big example in the SPACS application is the TransactionBean object. It manages all database connections, reads and writes for the application. To ass a new table into the database, toy only need to make a child object of TransactionBean that has some class variables set. These are automatically used by the parent class when the child inherits a function, meaning that all the database code has been written once yet works for everything.
