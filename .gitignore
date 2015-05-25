@@ -7,3 +7,5 @@
 *.blg
 *.pyc
 spacs/target/*
+
+*~
