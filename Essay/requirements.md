@@ -10,5 +10,9 @@ What to do to do the assignment:
 
 The papers must be published in recognised peer-reviewed journals, conference proceedings or books. Web sites other than refereed journal and conference archives are not acceptable. At least one of the papers must have been published in the last 10 years (2005 or later).
 
-Reference Materials:
-http://agilehandbook.com/agile-handbook.pdf
+Resources: 
+
+http://ieeexplore.ieee.org/
+http://tosem.acm.org/
+http://dl.acm.org/citation.cfm?id=J790
+http://requirements-engineering.org/
