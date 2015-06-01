@@ -1,8 +1,18 @@
+Papers Referencing:
+  - 
+
 The move to agile
+  - What is waterfall
+  - What is agile
+  - Why the move
 
-Waterfall was the way things were done
-Lots of teams moving to agile, new ones starting as agile
-
-Business Herarchy and Agile?
-
+Challenges Faced (pros and cons of the move)
+  - Getting people to convert
+  - Fitting in the Business Herarchy
+  - 
+  
+The future
+  - Lots of teams moving to agile, new ones starting as agile
+  - Past Agile - ABW "Agility"
+    - Valve
 
