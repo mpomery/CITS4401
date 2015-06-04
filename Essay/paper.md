@@ -16,18 +16,16 @@ discussion
 
 # Introduction
 
-The Agile movement started around the early 2000's and has since taken the industry by storm.
-Companies, both large and small have been converting from waterfall development patterns to agile teams in an order to deliver better quality software systems to clients faster.
-In examining the processes companies previously used and the ideas behind the agile development process
-The processes are undertaking the move to agile methodologies and the reasoning behind this industry wide move is an interesting topic.
-Society is becoming geared towards instant solutions to complex problems meaning software warehouses need to deliver value sooner.
+The Agile movement started around the early 2000s and has since taken the industry by storm as  companies, both large and small, have been converting from waterfall development patterns to agile teams in an order to deliver better quality software systems to clients faster.
+In examining the processes companies previously used and the ideas behind the agile development process we can examine this industry wide move.
+This move is being driven by a need to deliver more value sooner as society becomes geared towards instant solutions to complex problems.
 
 # Why Move From Waterfall
 
-Waterfall is a very structured development process that aims to deliver a single application at the end of development that meets all of the clients requirements.
-The process is carried out in several well defined steps, starting with design documents created and signed off by the client before development starts.
+Waterfall is a very structured development process that aims to deliver a single application at the end of development that meets all of the clients' requirements.
+The process is carried out in several well defined steps, starting with design documents being created and signed off by the client before development starts.
 Development then occurs and finishes before testing is done.
-At any point in time, the process can be halted, rewound back one step and then continued.
+At any point in time the process can be halted, rewound back one step and then continued.
 
 There are several places where problems in the system can arise while creating a system using the waterfall development process.
 What the client wants at the beginning of the process may change after requirements are finalized and development starts, meaning that the client is unhappy with the final outcome or that large changes to design need to occur in the middle of development.
